@@ -30,6 +30,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
 }
 
 dependencies {
@@ -53,5 +59,4 @@ dependencies {
     implementation(libs.coil.compose)
     implementation (libs.androidx.lifecycle.viewmodel.compose)
     implementation (libs.koin.androidx.compose)
-    implementation("androidx.compose.ui:ui-tooling-preview:1.4.0")
 }

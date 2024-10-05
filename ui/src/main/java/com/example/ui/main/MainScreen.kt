@@ -27,6 +27,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import com.example.domain.entity.ListButton
 import com.example.domain.entity.ListElement
 import com.example.ui.R
 import com.example.ui.main.vm.MainState
@@ -47,11 +48,11 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
                 )
             },
             actions = {
-//                Icon(
-//                    painter = painterResource(id = R.drawable.icon),
-//                    contentDescription = null,
-//                    modifier = Modifier.padding(end = 18.dp)
-//                )
+                Icon(
+                    painter = painterResource(id = R.drawable.icon),
+                    contentDescription = null,
+                    modifier = Modifier.padding(end = 18.dp)
+                )
             })
         Box(modifier = Modifier.fillMaxWidth()) {
             when (val st = state) {
@@ -132,4 +133,5 @@ private fun ElementRow(element: ListElement) {
 @Composable
 fun MainScreenPreview() {
     MainScreen()
+    //ElementRow(element = ListElement("","","", button = ListButton("")))
 }
