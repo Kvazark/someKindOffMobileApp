@@ -1,10 +1,10 @@
 package com.example.ui.main.vm
 
-import com.example.domain.entity.ListElement
+import com.example.domain.entity.ListElementEntity
 
 sealed class MainState {
     data class Content(
-        val list: List<ListElement>
+        val list: List<ListElementEntity>
     ) : MainState()
 
     data class Error(

@@ -34,7 +34,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
+        kotlinCompilerExtensionVersion = "1.5.2"
     }
 }
 
@@ -46,6 +46,7 @@ dependencies {
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.material)
     testImplementation(libs.junit)
+    testImplementation (libs.mockk)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 }

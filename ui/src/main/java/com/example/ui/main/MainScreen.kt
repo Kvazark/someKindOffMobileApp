@@ -1,5 +1,6 @@
 package com.example.ui.main
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,26 +18,32 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import com.example.domain.entity.ListButton
-import com.example.domain.entity.ListElement
+import com.example.domain.entity.ListElementEntity
 import com.example.ui.R
+import com.example.ui.details.DetailsScreenRoute
 import com.example.ui.main.vm.MainState
 import com.example.ui.main.vm.MainViewModel
+import com.example.ui.views.Like
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
+fun MainScreen(navController: NavController, viewModel: MainViewModel = koinViewModel()) {
     val state by viewModel.state.collectAsState()
     Column {
         TopAppBar(
@@ -57,20 +64,22 @@ fun MainScreen(viewModel: MainViewModel = koinViewModel()) {
         Box(modifier = Modifier.fillMaxWidth()) {
             when (val st = state) {
                 is MainState.Content -> {
-                    ContentState(list = st.list)
+                    ContentState(
+                        navController = navController,
+                        list = st.list
+                    ) { element, like ->
+                        viewModel.like(element, like)
+                    }
                 }
 
                 is MainState.Error -> {
                     Text(text = "Error")
                 }
 
-                MainState.Loading -> {
-                    LoadingState()
-                }
+                MainState.Loading -> LoadingState()
             }
         }
     }
-
 }
 
 @Composable
@@ -84,46 +93,60 @@ private fun LoadingState() {
 }
 
 @Composable
-private fun ContentState(list: List<ListElement>) {
+private fun ContentState(
+    navController: NavController,
+    list: List<ListElementEntity>,
+    onLike: (ListElementEntity, Boolean) -> Unit
+) {
     LazyColumn {
         item {
             list.forEach { element ->
-                ElementRow(element)
+                ElementRow(navController, element, onLike)
             }
         }
     }
 }
 
 @Composable
-private fun ElementRow(element: ListElement) {
+private fun ElementRow(
+    navController: NavController,
+    element: ListElementEntity,
+    onLike: (ListElementEntity, Boolean) -> Unit
+) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(vertical = 8.dp, horizontal = 16.dp)
+            .clickable { navController.navigate(DetailsScreenRoute(element.id)) }
     ) {
         AsyncImage(
             model = element.image,
             contentDescription = null,
             modifier = Modifier
-                .size(136.dp)
+                .size(96.dp)
                 .clip(shape = RoundedCornerShape(28.dp)),
             contentScale = ContentScale.Crop
         )
-        Column(modifier = Modifier.padding(vertical = 8.dp, horizontal = 16.dp)) {
-            Text(text = element.title, style = MaterialTheme.typography.headlineSmall)
-            Text(text = element.subtitle!!, style = MaterialTheme.typography.titleMedium)
-            Button(
-                onClick = { /*TODO*/ },
+        Column(modifier = Modifier
+            .padding(horizontal = 16.dp)
+            .weight(1f)) {
+            Text(
+                text = element.title,
+                style = MaterialTheme.typography.headlineSmall,
+                fontWeight = FontWeight.Bold,
                 modifier = Modifier.padding(top = 16.dp)
-            ) {
-                element.button?.title?.let {
-                    Text(
-                        text = it,
-                        style = MaterialTheme.typography.labelLarge
-                    )
-                }
+            )
+            Text(
+                text = "${element.date} — ${element.country}",
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Normal
+            )
 
-            }
+        }
+        val like = remember { mutableStateOf(element.like) }
+        Like(like = like, modifier = Modifier.align(Alignment.CenterVertically))
+        LaunchedEffect(like.value) {
+            onLike.invoke(element, like.value)
         }
 
     }
@@ -132,6 +155,6 @@ private fun ElementRow(element: ListElement) {
 @Preview
 @Composable
 fun MainScreenPreview() {
-    MainScreen()
+    //MainScreen()
     //ElementRow(element = ListElement("","","", button = ListButton("")))
 }
