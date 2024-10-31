@@ -1,7 +1,7 @@
 package com.example.data.repository
-import com.example.domain.entity.ListButton
-import com.example.domain.entity.ListElement
-import com.example.domain.repository.ListRepository
+import com.example.domain.data.entity.ListButton
+import com.example.domain.data.entity.ListElement
+import com.example.domain.data.repository.ListRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
@@ -11,36 +11,57 @@ class ListRepositoryImpl : ListRepository {
         delay(5_000)
         return@withContext listOf(
             ListElement(
-                image = "https://avatars.mds.yandex.net/i?id=df6f0a9b59a9738610c34882daea14963b51056a-8249766-images-thumbs&n=13",
+                id=0,
+                date="26.05.2024",
+                image = "https://i.pinimg.com/564x/fb/54/06/fb5406326d530c3f5fd1c2be6d7e3c05.jpg",
                 title = "title",
-                subtitle = "test",
+                country = "Russia",
                 button = ListButton(
-                    title = "test"
+                    title = "Подробнее"
                 )
             ),
             ListElement(
-                image = "https://avatars.mds.yandex.net/i?id=df6f0a9b59a9738610c34882daea14963b51056a-8249766-images-thumbs&n=13",
+                id=1,
+                date="27.05.2024",
+                image = "https://i.pinimg.com/564x/fb/54/06/fb5406326d530c3f5fd1c2be6d7e3c05.jpg",
                 title = "title",
-                subtitle = "test",
+                country = "Russia",
                 button = ListButton(
-                    title = "test"
+                    title = "Подробнее"
                 )
             ),
             ListElement(
-                image = "https://avatars.mds.yandex.net/i?id=df6f0a9b59a9738610c34882daea14963b51056a-8249766-images-thumbs&n=13",
+                id=2,
+                date="05.09.2024",
+                image = "https://i.pinimg.com/564x/fb/54/06/fb5406326d530c3f5fd1c2be6d7e3c05.jpg",
                 title = "title",
-                subtitle = "test",
+                country = "Russia",
                 button = ListButton(
-                    title = "test"
+                    title = "Подробнее"
                 )
             ),
             ListElement(
-                image = "https://avatars.mds.yandex.net/i?id=df6f0a9b59a9738610c34882daea14963b51056a-8249766-images-thumbs&n=13",
+                id=3,
+                date="31.10.2024",
+                image = "https://i.pinimg.com/564x/fb/54/06/fb5406326d530c3f5fd1c2be6d7e3c05.jpg",
                 title = "title",
-                subtitle = "test",
+                country = "Russia",
                 button = ListButton(
-                    title = "test"
+                    title = "Подробнее"
                 )
+            )
+        )
+    }
+
+    override suspend fun getElementListById(id: Long): ListElement {
+        return ListElement(
+            id = 2,
+            title = "title",
+            date = "05.09.2024",
+            country = "Russia",
+            image = "https://i.pinimg.com/564x/fb/54/06/fb5406326d530c3f5fd1c2be6d7e3c05.jpg",
+            button = ListButton(
+                title = "Подробнее"
             )
         )
     }
