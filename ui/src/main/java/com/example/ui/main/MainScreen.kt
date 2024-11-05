@@ -61,6 +61,11 @@ fun MainScreen(navController: NavController, viewModel: MainViewModel = koinView
                     modifier = Modifier.padding(end = 18.dp)
                 )
             })
+        LaunchedEffect(Unit) {
+            navController.addOnDestinationChangedListener { _, destination, _ ->
+                viewModel.refreshContent()
+            }
+        }
         Box(modifier = Modifier.fillMaxWidth()) {
             when (val st = state) {
                 is MainState.Content -> {
@@ -127,9 +132,11 @@ private fun ElementRow(
                 .clip(shape = RoundedCornerShape(28.dp)),
             contentScale = ContentScale.Crop
         )
-        Column(modifier = Modifier
-            .padding(horizontal = 16.dp)
-            .weight(1f)) {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 16.dp)
+                .weight(1f)
+        ) {
             Text(
                 text = element.title,
                 style = MaterialTheme.typography.headlineSmall,
@@ -137,7 +144,7 @@ private fun ElementRow(
                 modifier = Modifier.padding(top = 16.dp)
             )
             Text(
-                text = "${element.date} — ${element.country}",
+                text = "${element.date} — ${element.subtitle}",
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Normal
             )

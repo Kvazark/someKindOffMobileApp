@@ -13,7 +13,7 @@ class ListElementMapper(
             image = from.image,
             title = from.title,
             date = from.date,
-            country = from.country,
+            subtitle = from.subtitle,
             button = from.button,
             like = localStorageRepository.isLiked(from.id)
         )

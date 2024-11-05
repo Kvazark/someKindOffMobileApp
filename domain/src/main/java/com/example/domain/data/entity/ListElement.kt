@@ -5,6 +5,6 @@ data class ListElement(
     val image: String,
     val title: String,
     val date: String,
-    val country: String,
+    val subtitle: String,
     val button: ListButton?
 )

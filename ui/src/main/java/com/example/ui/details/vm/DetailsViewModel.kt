@@ -13,6 +13,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
+import kotlinx.coroutines.delay
 
 class DetailsViewModel(
     private val useCase: ElementByIdUseCase,
@@ -23,7 +24,7 @@ class DetailsViewModel(
     val state: StateFlow<DetailsState>
         get() = _state
 
-    private val exceptionHandler = CoroutineExceptionHandler { coroutineContext, throwable ->
+    private val exceptionHandler = CoroutineExceptionHandler { _, throwable ->
         viewModelScope.launch {
             val title = when (val curState = _state.value) {
                 is DetailsState.Content -> curState.title
@@ -42,7 +43,6 @@ class DetailsViewModel(
     fun markAsRead() {
         val route = savedStateHandle.toRoute<DetailsScreenRoute>()
         storage.markAsRead(route.id)
-        loadContent()
     }
 
     private fun loadContent() {
@@ -55,6 +55,7 @@ class DetailsViewModel(
 
     fun like(elementEntity: ListElementEntity, like: Boolean) {
         storage.like(elementEntity.id, like)
+        loadContent()
     }
 
 }

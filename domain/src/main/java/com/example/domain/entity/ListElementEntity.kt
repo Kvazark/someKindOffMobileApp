@@ -6,7 +6,7 @@ data class ListElementEntity(
     val id: Long,
     val title: String,
     val date: String,
-    val country: String,
+    val subtitle: String,
     val image:String,
     val button: ListButton?,
     val like: Boolean

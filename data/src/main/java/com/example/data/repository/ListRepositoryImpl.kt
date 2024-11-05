@@ -13,9 +13,9 @@ class ListRepositoryImpl : ListRepository {
             ListElement(
                 id=0,
                 date="26.05.2024",
-                image = "https://i.pinimg.com/564x/fb/54/06/fb5406326d530c3f5fd1c2be6d7e3c05.jpg",
+                image = "https://i.pinimg.com/564x/31/14/91/311491e2c6525c161a13cc208c70d6cf.jpg",
                 title = "title",
-                country = "Russia",
+                subtitle = "subtitle",
                 button = ListButton(
                     title = "Подробнее"
                 )
@@ -25,7 +25,7 @@ class ListRepositoryImpl : ListRepository {
                 date="27.05.2024",
                 image = "https://i.pinimg.com/564x/fb/54/06/fb5406326d530c3f5fd1c2be6d7e3c05.jpg",
                 title = "title",
-                country = "Russia",
+                subtitle = "subtitle",
                 button = ListButton(
                     title = "Подробнее"
                 )
@@ -33,9 +33,9 @@ class ListRepositoryImpl : ListRepository {
             ListElement(
                 id=2,
                 date="05.09.2024",
-                image = "https://i.pinimg.com/564x/fb/54/06/fb5406326d530c3f5fd1c2be6d7e3c05.jpg",
+                image = "https://avatars.mds.yandex.net/i?id=2a00000192f172394f810190aa732b4642dd-467069-fast-images&n=13",
                 title = "title",
-                country = "Russia",
+                subtitle = "Boo",
                 button = ListButton(
                     title = "Подробнее"
                 )
@@ -43,9 +43,9 @@ class ListRepositoryImpl : ListRepository {
             ListElement(
                 id=3,
                 date="31.10.2024",
-                image = "https://i.pinimg.com/564x/fb/54/06/fb5406326d530c3f5fd1c2be6d7e3c05.jpg",
+                image = "https://i.pinimg.com/564x/a5/75/dc/a575dc4c13fd6a2842d6f08c56b086c9.jpg",
                 title = "title",
-                country = "Russia",
+                subtitle = "subtitle",
                 button = ListButton(
                     title = "Подробнее"
                 )
@@ -55,10 +55,10 @@ class ListRepositoryImpl : ListRepository {
 
     override suspend fun getElementListById(id: Long): ListElement {
         return ListElement(
-            id = 2,
+            id = id,
             title = "title",
             date = "05.09.2024",
-            country = "Russia",
+            subtitle = "subtitle",
             image = "https://i.pinimg.com/564x/fb/54/06/fb5406326d530c3f5fd1c2be6d7e3c05.jpg",
             button = ListButton(
                 title = "Подробнее"
