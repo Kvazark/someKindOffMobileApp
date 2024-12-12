@@ -90,7 +90,7 @@ class AudioService : Service() {
         return NotificationCompat.Builder(this, CHANNEL_ID)
             .setContentTitle("Playing Audio")
             .setContentText(if (isPlaying) "Now Playing" else "Paused")
-            .setSmallIcon(R.drawable.music_img)
+            .setSmallIcon(R.drawable.music_icon)
             .setAutoCancel(false)
             .setOngoing(true)
             .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
