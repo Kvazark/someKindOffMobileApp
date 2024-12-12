@@ -12,12 +12,12 @@ import com.example.domain.data.repository.LocalStorageRepository
 import com.example.domain.entity.ListElementEntity
 import com.example.domain.mapper.ListElementMapper
 import com.example.domain.mapper.Mapper
+import com.example.domain.usecase.ElementByIdFromCacheUseCase
 import com.example.domain.usecase.ElementByIdUseCase
 import com.example.domain.usecase.ListUseCase
 import com.example.ui.details.vm.DetailsViewModel
 import com.example.ui.main.vm.MainViewModel
 import org.koin.core.module.dsl.viewModel
-import org.koin.core.scope.get
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -37,6 +37,7 @@ val appModule = module {
     single<ListRepository> { ListRepositoryImpl() }
     single { ListUseCase(get(), get()) }
     single { ElementByIdUseCase(get(), get(), get()) }
+    single { ElementByIdFromCacheUseCase(get(), get()) }
     single<Mapper<ListElement, ListElementEntity>> { ListElementMapper(get()) }
     viewModel { MainViewModel(get(), get(),get()) }
     viewModel { DetailsViewModel(get(), get(), get()) }
